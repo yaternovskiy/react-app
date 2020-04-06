@@ -9,9 +9,8 @@ class ApiService {
     this.fb.initializeApp(firebaseConfig)
   }
 
-  auth(email, password) {
-    return this.fb.auth().createUserWithEmailAndPassword(email, password)
-  }
+  auth = (email, password) =>
+    this.fb.auth().createUserWithEmailAndPassword(email, password)
 }
 
 export const apiService = new ApiService()

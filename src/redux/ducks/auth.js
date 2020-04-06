@@ -1,3 +1,4 @@
+import { put, call, takeEvery } from 'redux-saga/effects'
 import { Record } from 'immutable'
 import { apiService } from '../../services/api'
 
@@ -17,6 +18,7 @@ const AuthRecord = new Record({
 const moduleName = 'auth'
 const prefix = `${appName}/${moduleName}`
 
+export const SIGN_UP_REQUESTED = `${prefix}/REQUESTED`
 const SIGN_UP_START = `${prefix}/${START}`
 const SIGN_UP_ERROR = `${prefix}/${ERROR}`
 const SIGN_UP_SUCCESS = `${prefix}/${SUCCESS}`
@@ -65,5 +67,31 @@ export const createSignUp = ({ email, password }) => async (dispatch) => {
 }
 
 /**
- *
+ * SAGAS
  **/
+
+function* signUpSaga(action) {
+  const { email, password } = action.payload
+
+  yield put({
+    type: SIGN_UP_START,
+    payload: {},
+  })
+
+  try {
+    const user = yield call(apiService.auth, email, password)
+    yield put({
+      type: SIGN_UP_SUCCESS,
+      payload: { user },
+    })
+  } catch (error) {
+    yield put({
+      type: SIGN_UP_ERROR,
+      payload: { error },
+    })
+  }
+}
+
+export function* saga(action) {
+  yield takeEvery(SIGN_UP_REQUESTED, signUpSaga)
+}

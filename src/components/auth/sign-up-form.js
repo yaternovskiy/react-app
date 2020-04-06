@@ -2,12 +2,13 @@ import React from 'react'
 
 import { Formik, Form, Field } from 'formik'
 import { useDispatch } from 'react-redux'
-import { createSignUp } from '../../redux/ducks/auth'
+//import { createSignUp } from '../../redux/ducks/auth';
+import { SIGN_UP_REQUESTED } from '../../redux/ducks/auth'
 
 export const SignUpForm = () => {
   const dispatch = useDispatch()
-  const handleSubmit = (email, password) =>
-    dispatch(createSignUp(email, password))
+  const handleSubmit = (payload) =>
+    dispatch({ type: SIGN_UP_REQUESTED, payload })
 
   return (
     <div>

@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 
+import { PersonForm } from '../person/person-form'
+import { PeopleList } from '../person/people-list'
+
 class AdminPage extends Component {
   static propTypes = {}
 
@@ -7,6 +10,8 @@ class AdminPage extends Component {
     return (
       <div>
         <h1>Admin</h1>
+        <PersonForm />
+        <PeopleList />
       </div>
     )
   }
